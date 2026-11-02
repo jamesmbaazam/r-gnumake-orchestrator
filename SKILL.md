@@ -18,21 +18,24 @@ These patterns scale from small exploratory analyses to large research compendiu
 
 ### R Script Interface
 
-Every pipeline script accepts arguments in this order:
+Every pipeline script defines `.args` conditionally: interactive defaults if running in the console, `commandArgs()` if called from Make.
 
 ```r
-args <- commandArgs(trailingOnly = TRUE)
+# Define arguments: defaults for interactive, commandArgs when called from Make
+.args <- if (interactive()) c(
+  "data/default1.rds",
+  "data/default2.rds",
+  "R/shared_inputs.R",
+  "output/default.csv"
+) else commandArgs(trailingOnly = TRUE)
 
-# 1. Input files (all prerequisites, in order)
-input1 <- if (length(args) >= 1) args[1] else "data/default1.rds"
-input2 <- if (length(args) >= 2) args[2] else "data/default2.rds"
+# Extract from .args by position
+input1 <- .args[1]
+input2 <- .args[2]
+helper <- .args[3]
+output <- .args[4]
 
-# 2. Shared configuration script
-helper <- if (length(args) >= 3) args[3] else "R/shared_inputs.R"
-source(helper)  # loads COUNTRY, HORIZON, SEED, OUTPUT_DIR, etc.
-
-# 3. Output file (target)
-output <- if (length(args) >= 4) args[4] else "output/default.csv"
+source(helper)  # loads COUNTRY, SEED, OUTPUT_DIR, etc.
 
 # Now: read inputs, compute, write output, exit
 data <- read_rds(input1)
@@ -40,9 +43,8 @@ results <- process(data)
 write_csv(results, output)
 ```
 
-**In Make:** `Rscript $^ $@` passes all prerequisites in order, then the target.
-
-**Locally/interactively:** `Rscript R/myscript.R` uses `.args` defaults (no arguments needed).
+**In Make:** `Rscript $^ $@` passes all prerequisites in order, then the target.  
+**Interactively:** `Rscript R/myscript.R` uses `.args` defaults (no arguments needed).
 
 ### Makefile Pattern
 
@@ -378,10 +380,15 @@ output/summary.csv: output/model.rds output/processed.rds R/score.R R/shared_inp
 ### R/process.R
 
 ```r
-args <- commandArgs(trailingOnly = TRUE)
-raw_file <- if (length(args) >= 1) args[1] else "data/raw.csv"
-helper <- if (length(args) >= 2) args[2] else "R/shared_inputs.R"
-output <- if (length(args) >= 3) args[3] else "output/processed.rds"
+.args <- if (interactive()) c(
+  "data/raw.csv",
+  "R/shared_inputs.R",
+  "output/processed.rds"
+) else commandArgs(trailingOnly = TRUE)
+
+raw_file <- .args[1]
+helper <- .args[2]
+output <- .args[3]
 
 source(helper)
 
@@ -395,10 +402,15 @@ write_rds(data, output)
 ### R/fit.R
 
 ```r
-args <- commandArgs(trailingOnly = TRUE)
-data_file <- if (length(args) >= 1) args[1] else "output/processed.rds"
-helper <- if (length(args) >= 2) args[2] else "R/shared_inputs.R"
-output <- if (length(args) >= 3) args[3] else "output/model.rds"
+.args <- if (interactive()) c(
+  "output/processed.rds",
+  "R/shared_inputs.R",
+  "output/model.rds"
+) else commandArgs(trailingOnly = TRUE)
+
+data_file <- .args[1]
+helper <- .args[2]
+output <- .args[3]
 
 source(helper)
 
@@ -410,11 +422,17 @@ write_rds(model, output)
 ### R/score.R
 
 ```r
-args <- commandArgs(trailingOnly = TRUE)
-model_file <- if (length(args) >= 1) args[1] else "output/model.rds"
-data_file <- if (length(args) >= 2) args[2] else "output/processed.rds"
-helper <- if (length(args) >= 3) args[3] else "R/shared_inputs.R"
-output <- if (length(args) >= 4) args[4] else "output/summary.csv"
+.args <- if (interactive()) c(
+  "output/model.rds",
+  "output/processed.rds",
+  "R/shared_inputs.R",
+  "output/summary.csv"
+) else commandArgs(trailingOnly = TRUE)
+
+model_file <- .args[1]
+data_file <- .args[2]
+helper <- .args[3]
+output <- .args[4]
 
 source(helper)
 
