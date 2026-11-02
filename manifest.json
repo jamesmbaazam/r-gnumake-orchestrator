@@ -1,0 +1,27 @@
+{
+  "name": "r-gnumake-orchestrator",
+  "version": "1.0.0",
+  "title": "R + GNU Make Orchestrator",
+  "description": "Generic patterns for orchestrating reproducible analysis pipelines in R using GNU Make 3.81 with file-target workflows and commandArgs-based script interfaces.",
+  "keywords": [
+    "R",
+    "GNU Make",
+    "reproducible research",
+    "data pipeline",
+    "roxygen2",
+    "tidyverse",
+    "file targets",
+    "best practices",
+    "automation"
+  ],
+  "author": "Copilot (from research project patterns)",
+  "license": "MIT",
+  "tags": [
+    "research",
+    "data science",
+    "makefile",
+    "best practices",
+    "pipeline",
+    "reproducibility"
+  ]
+}
