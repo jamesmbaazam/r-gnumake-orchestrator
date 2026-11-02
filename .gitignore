@@ -1,0 +1,16 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Skill-specific (if examples are added)
+output/
+data/
+*.rds
+*.csv
+*.png
