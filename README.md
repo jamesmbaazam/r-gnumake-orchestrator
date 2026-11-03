@@ -2,6 +2,31 @@
 
 Generic patterns for orchestrating R analysis pipelines using GNU Make 3.81. Suitable for data science, ML, forecasting, and research workflows.
 
+## Installation
+
+### Option 1: Clone into Claude Skills (Recommended)
+
+```bash
+git clone https://github.com/jamesmbaazam/r-gnumake-orchestrator.git \
+  ~/.claude/skills/r-gnumake-orchestrator
+```
+
+Then load in Claude with `/skill r-gnumake-orchestrator`.
+
+### Option 2: Reference from GitHub
+
+Just link to this repository in Claude:
+
+```
+/skill https://github.com/jamesmbaazam/r-gnumake-orchestrator
+```
+
+### Option 3: Copy Files to Your Project
+
+```bash
+cp -r ~/.claude/skills/r-gnumake-orchestrator/SKILL.md your-project/docs/
+```
+
 ## Three Core Rules
 
 1. **Files are targets:** Every .csv, .rds, .png is a Make target; only rebuild when inputs change
