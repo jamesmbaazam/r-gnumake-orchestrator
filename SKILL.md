@@ -547,9 +547,152 @@ output/summary_all.csv: $(patsubst %, output/summary_%.csv, ${PROVINCES}) R/aggr
 	Rscript $^ $@
 ```
 
+## Tidyverse Style & Design Principles
+
+This skill builds on the [Tidyverse Style Guide](https://style.tidyverse.org/) and [Tidyverse Design Principles](https://github.com/tidyverse/design/) for consistency with the modern R ecosystem. Key patterns extracted with attribution:
+
+### Naming Conventions
+*Adapted from [Tidyverse Style: Object Names](https://style.tidyverse.org/syntax.html#sec-objectnames)*
+
+- **Use snake_case:** `day_one`, not `dayOne` or `day.one`
+- **Verbs for functions:** `add_row()`, not `row_adder()`
+- **Nouns for variables:** `model_data`, not `process_data_for_model`
+- **Avoid re-using common function names:** Don't shadow `T`, `c`, `mean`, etc.
+
+```r
+# Good: verb describes action
+fit_model <- function(data, formula) { ... }
+
+# Good: noun describes content
+training_data <- data |> filter(year < 2020)
+
+# Bad: noun where verb expected
+row_adder <- function(x, y) x + y
+
+# Bad: shadows base function
+mean <- function(x) sum(x)
+```
+
+### Function Design
+*Adapted from [Tidyverse Design: Defaults — Short and Sweet](https://design.tidyverse.org/) and [Style: Functions](https://style.tidyverse.org/functions.html)*
+
+- **Separate data from control arguments:** Data goes first (no name needed), controls go last (always named)
+- **Prefer early returns:** Exit early with explicit `return()` for error cases; let last expression be the success value
+- **Return first argument invisibly for side-effects:** Enables piping for functions that print, plot, or save
+
+```r
+# Good: data first, control args last
+score_model <- function(data, model, metrics = c("auc", "pr")) {
+  # data and model are positional, metrics is named control
+}
+
+# Good: early return for special cases
+validate_data <- function(data) {
+  if (nrow(data) == 0) return(NULL)
+  if (anyNA(data)) return(NULL)
+  data  # success value returned implicitly
+}
+
+# Good: invisible return for side-effects (saves to disk, returns object)
+save_results <- function(results, path) {
+  write_csv(results, path)
+  invisible(results)  # Allows: results |> save_results(path) |> next_stage()
+}
+```
+
+### Spacing & Syntax
+*Adapted from [Tidyverse Style: Syntax](https://style.tidyverse.org/syntax.html)*
+
+- **Spaces around infix operators:** `x <- a + b`, not `x<-a+b`
+- **No spaces inside function calls:** `mean(x)`, not `mean( x )`
+- **Space after comma:** `x[1, 2]`, not `x[1,2]`
+- **Lambda syntax (modern):** `\(x) x + 1` instead of `function(x) x + 1` (single-line only)
+- **Native pipe:** `|>` instead of `%>%`
+
+```r
+# Good
+results <- data |>
+  filter(year > 2015) |>
+  mutate(across(everything(), as.numeric))
+
+# Good: modern lambda for single-line functions
+mapping <- list_rbind(map(datasets, \(x) fit_model(x)))
+
+# Bad: multi-line lambda (use function() instead)
+mapping <- map(datasets, \(x) {
+  fit_model(x)
+})
+
+# Bad: old pipe and function syntax
+results <- data %>%
+  filter(year > 2015) %>%
+  mutate_all(as.numeric)
+```
+
+### Code Organization
+*Adapted from [Tidyverse Design: Organize Code](https://github.com/tidyverse/design/)*
+
+- **One thought per paragraph:** Separate logical blocks with blank lines (sparingly)
+- **Avoid empty lines at function start/end**
+- **Group related operations together:** Data transformation, then computation, then output
+
+```r
+# Good: clear structure
+fit_tree <- function(data, outcome_col) {
+  # Prepare data
+  data_clean <- data |>
+    filter(!is.na({{ outcome_col }})) |>
+    select(where(is.numeric))
+
+  # Fit model
+  model <- rpart(outcome_col ~ ., data = data_clean)
+
+  # Return
+  model
+}
+
+# Bad: no logical separation
+fit_tree <- function(data, outcome_col) {
+  data_clean <- data |> filter(!is.na({{ outcome_col }}))
+  data_clean <- data_clean |> select(where(is.numeric))
+  model <- rpart(outcome_col ~ ., data = data_clean)
+  return(model)
+}
+```
+
+### Documentation
+*Adapted from [Tidyverse Style: Documentation](https://style.tidyverse.org/documentation.html)*
+
+- **roxygen2 blocks:** `#' @param`, `#' @return`, `#' @details` (markdown format)
+- **Describe what function does, then how it works:** Lead with intent, follow with mechanism
+- **Document parameters that aren't obvious:** What class? What values expected?
+
+```r
+#' Fit a tree model to training data
+#'
+#' Splits the outcome variable into train/test using date-based rolling origins,
+#' then fits a regression tree to each training window.
+#'
+#' @param data A tibble with columns: `year`, `month`, `outcome`, predictors...
+#' @param outcome_col Quoted column name of numeric outcome
+#' @param min_year,max_year Calendar years defining the analysis period
+#'
+#' @return A tibble with columns: `origin_year`, `model`, `n_train`
+#'
+#' @details
+#' Rolling origins expand forward from min_year, refit annually, and predict
+#' one-step ahead. This harness matches the operational pipeline in Voorman et al. (2023).
+#'
+#' @export
+fit_tree <- function(data, outcome_col, min_year, max_year) {
+  # implementation
+}
+```
+
 ## References
 
 - **Tidyverse style guide:** https://style.tidyverse.org/
+- **Tidyverse design principles:** https://github.com/tidyverse/design/
 - **GNU Make manual:** https://www.gnu.org/software/make/manual/
 - **roxygen2:** https://roxygen2.r-lib.org/
 - **air formatter:** https://posit-dev.github.io/air/
