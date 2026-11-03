@@ -13,6 +13,8 @@ keywords:
 
 # R + GNU Make Reproducible Research Patterns
 
+**This is a Claude skill.** Load with `/skill r-gnumake-orchestrator` in Claude to access patterns for building reproducible data analysis pipelines.
+
 A guide to orchestrating analysis pipelines in R using GNU Make 3.81 with file-target workflows and a standardized script interface contract.
 
 ## Overview
