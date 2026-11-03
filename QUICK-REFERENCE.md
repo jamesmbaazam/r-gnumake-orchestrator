@@ -406,7 +406,7 @@ After editing prose or comments, remove:
 - [ ] Excessive dashes (—)
 - [ ] Inflated language (pivotal, crucial, testament, featured)
 - [ ] Chatbot phrases (I hope this helps, Let's dive in)
-- [ ] Comments explaining rationale (belongs in Methods, not code)
+- [ ] Comments that just restate the code (rationale goes in Methods; comments explain WHY when rationale isn't obvious)
 
 **Tool:** `skill humanizer` for quick polish
 

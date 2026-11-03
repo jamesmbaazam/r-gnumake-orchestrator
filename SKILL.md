@@ -290,17 +290,32 @@ Settings in `air.toml` at repo root (tracked, not personal).
 
 ### Comments
 
-Comment **what** the code does, not **why** (rationale goes in Methods section of paper).
+Comment **why** the code does something, not **what** (only where the rationale isn't obvious from reading the code). Avoid comments that just restate the code.
 
 ```r
-# Bad
-# Use a random forest because it's robust to non-linear relationships
-model <- ranger(outcome ~ ., data = data)
-
-# Good
+# Bad: repeats what the code obviously does
 # Fit a random forest with default hyperparameters
 model <- ranger(outcome ~ ., data = data)
+
+# Good: explains why we made this choice
+# Random forest over CART here because we need confidence intervals from quantile regression
+model <- ranger(outcome ~ ., data = data)
+
+# Bad: obvious from the code
+# Filter rows where year is in ANALYSIS_YEARS
+data <- data |> filter(year %in% ANALYSIS_YEARS)
+
+# Good: explains the non-obvious reasoning
+# Exclude year 2015 due to incomplete surveillance coverage (see Methods)
+data <- data |> filter(year >= 2016)
+
+# No comment needed: the code is self-explanatory
+data <- data |>
+  select(district, year, outcome) |>
+  filter(!is.na(outcome))
 ```
+
+Write comments in the manuscript's Methods section when explaining a methodological choice; use code comments only when the decision is unexpected or non-standard.
 
 ### No Output Printing
 
