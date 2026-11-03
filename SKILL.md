@@ -660,6 +660,42 @@ fit_tree <- function(data, outcome_col) {
 }
 ```
 
+### Package Choices
+
+**Use only current (non-deprecated) functions.** When you find a deprecated function in the codebase, replace it with its successor—check the lifecycle badge on the help page.
+
+Common replacements:
+- `mutate_at()` / `_if()` / `_all()` → `across()`
+- `gather()` / `spread()` → `pivot_longer()` / `pivot_wider()`
+- `sample_n()` / `sample_frac()` → `slice_sample()`
+- `top_n()` → `slice_max()` / `slice_min()`
+- `map_dfr()` / `map_dfc()` → `map()` then `list_rbind()` / `list_cbind()`
+
+**For heavy data operations, consider dplyr first; defer to data.table only when performance is critical.**
+
+Use dplyr (tidyverse) for:
+- Most data manipulation (it's clear, familiar, and fast enough)
+- Exploratory work
+- Pipeline scripts where clarity matters more than microseconds
+
+Use [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/) for:
+- Joining or grouping multi-GB datasets
+- Real-time streaming or repeated operations
+- Explicit performance requirement (document in a comment)
+
+```r
+# dplyr: clear, idiomatic, fast enough for most pipelines
+data |>
+  filter(year >= 2015) |>
+  group_by(district) |>
+  summarise(total = sum(outcome), .groups = "drop")
+
+# data.table: when you need sub-second performance on large data
+# Benchmarked: dplyr took 8s, data.table takes 0.3s on 500M rows
+dt <- as.data.table(data)
+dt[year >= 2015, .(total = sum(outcome)), by = district]
+```
+
 ### Documentation
 *Adapted from [Tidyverse Style: Documentation](https://style.tidyverse.org/documentation.html)*
 
