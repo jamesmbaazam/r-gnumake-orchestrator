@@ -1,3 +1,16 @@
+---
+title: R + GNU Make Reproducible Research Patterns
+description: Generic patterns for orchestrating data analysis pipelines in R using GNU Make with file-target workflows and standardized script contracts
+keywords:
+  - R
+  - GNU Make
+  - reproducible research
+  - pipeline orchestration
+  - workflow automation
+  - Tidyverse
+  - data analysis
+---
+
 # R + GNU Make Reproducible Research Patterns
 
 A guide to orchestrating analysis pipelines in R using GNU Make 3.81 with file-target workflows and a standardized script interface contract.

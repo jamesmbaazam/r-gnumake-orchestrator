@@ -1,3 +1,14 @@
+---
+title: Quick Reference - R + GNU Make
+description: Copy-paste templates, examples, testing workflow, and common commands
+keywords:
+  - R
+  - GNU Make
+  - templates
+  - examples
+  - quick start
+---
+
 # Quick Reference: R + GNU Make Reproducible Research
 
 ## Script Argument Contract (Copy-Paste Template)

@@ -1,3 +1,12 @@
+---
+title: Navigation Guide - R + GNU Make Skill
+description: Task-based routing and decision tree to find information
+keywords:
+  - navigation
+  - task routing
+  - how-to
+---
+
 # R + GNU Make Reproducible Research Skill — Navigation
 
 ## Three Core Rules
