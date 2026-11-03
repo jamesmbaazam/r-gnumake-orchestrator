@@ -27,6 +27,29 @@ Just link to this repository in Claude:
 cp -r ~/.claude/skills/r-gnumake-orchestrator/SKILL.md your-project/docs/
 ```
 
+## Why GNU Make with R?
+
+Data analysis pipelines involve many interdependent stages (prepare → fit → score → visualize). GNU Make excels at this because:
+
+- **Dependency tracking:** Automatically reruns only the stages whose inputs changed—skip expensive retraining when data prep fails
+- **Universal:** Works everywhere (Linux, macOS, Windows with WSL); no language-specific tool needed
+- **Language-agnostic:** Orchestrates R, Python, shell, any executable in one workflow
+- **Parallel execution:** `make -j4` runs independent targets simultaneously
+- **Human-readable:** Makefiles are plain text; version control and review are straightforward
+
+### Alternatives to GNU Make
+
+| Tool | Pros | Cons | When to Use |
+|------|------|------|------------|
+| [GNU Make](https://www.gnu.org/software/make/) | Universal, dependency tracking, parallel | Cryptic syntax (tabs, quoting) | Large pipelines, multi-language workflows |
+| [Task](https://taskfile.dev/) | YAML syntax, friendly, task dependencies | R-specific docs limited | Medium pipelines, prefer YAML over Makefile syntax |
+| [targets](https://docs.ropensci.org/targets/) | R-native, reproducibility-first, dynamic branching | R-only, steeper learning curve | R packages, complex dependency graphs |
+| [Snakemake](https://snakemake.readthedocs.io/) | Python ecosystem, file-based, rules-based | Python-heavy, overkill for small pipelines | Python-heavy teams, bioinformatics workflows |
+| [Nextflow](https://www.nextflow.io/) | Scalable, parallel, cloud-native | Complex, designed for HPC/cloud | Large-scale parallel pipelines, HPC clusters |
+| [Make (hand-rolled)](#) | Complete control | Easy to write wrong, no standards | Education only |
+
+**This skill uses GNU Make** because it's lightweight, preinstalled on most systems, and forces clean separation between orchestration and analysis logic.
+
 ## Three Core Rules
 
 1. **Files are targets:** Every .csv, .rds, .png is a Make target; only rebuild when inputs change
