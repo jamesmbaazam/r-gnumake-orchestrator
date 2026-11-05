@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this skill, you may cite it using the metadata below."
+type: software
+title: "r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make"
+version: 1.0.0
+date-released: 2026-11-05
+license: MIT
+repository-code: "https://github.com/jamesmbaazam/r-gnumake-orchestrator"
+url: "https://github.com/jamesmbaazam/r-gnumake-orchestrator"
+authors:
+  - family-names: Azam
+    given-names: James
+keywords:
+  - R
+  - GNU Make
+  - reproducible research
+  - Claude Code
+  - skill

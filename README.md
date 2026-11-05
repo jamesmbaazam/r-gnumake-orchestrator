@@ -99,6 +99,23 @@ write_csv(results, output)
 make output/results.csv  # Only rebuilds if inputs changed
 ```
 
+## Citing this skill
+
+If you find it useful, you are welcome to cite it, though you don't have to. GitHub's "Cite this repository" button (from [`CITATION.cff`](CITATION.cff)) gives APA and BibTeX.
+
+> Azam J. r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make (v1.0.0) [software]. 2026. https://github.com/jamesmbaazam/r-gnumake-orchestrator
+
+```bibtex
+@software{azam_r_gnumake_orchestrator_2026,
+  author  = {Azam, James},
+  title   = {r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make},
+  version = {1.0.0},
+  year    = {2026},
+  url     = {https://github.com/jamesmbaazam/r-gnumake-orchestrator},
+  license = {MIT}
+}
+```
+
 ---
 
 **License:** MIT  
