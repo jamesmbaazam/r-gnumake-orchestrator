@@ -9,10 +9,10 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - README section "What the skill covers", summarising the pipeline patterns and the tidyverse style and design guidance, with data.table reserved for intensive data manipulation.
 
 ### Removed
-- `QUICK-REFERENCE.md`; `INDEX.md` now points to the matching `SKILL.md` sections instead.
+- `QUICK-REFERENCE.md` and `INDEX.md`. `SKILL.md` and `README.md` are now the only guides.
 
 ### Changed
-- Renamed the "Core Contract" section in `SKILL.md` to "R Scripts and Makefile Conventions" (and updated `INDEX.md` references).
+- Renamed the "Core Contract" section in `SKILL.md` to "R Scripts and Makefile Conventions".
 - Renamed "R Script Interface" to "R Script Pattern".
 - The Pipeline Scripts example now uses the same `.args` pattern as the R Script Pattern section.
 - README: the "Alternatives to GNU Make" table is now collapsible.
