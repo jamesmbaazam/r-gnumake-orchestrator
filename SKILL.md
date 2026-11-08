@@ -29,7 +29,7 @@ This skill captures generic patterns for reproducible data analysis:
 
 These patterns scale from small exploratory analyses to large research compendiums with dozens of stages and thousands of generated artifacts.
 
-## Core Contract
+## R Scripts and Makefile Conventions
 
 ### R Script Interface
 

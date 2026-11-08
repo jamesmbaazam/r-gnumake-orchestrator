@@ -77,7 +77,7 @@ keywords:
 
 ### SKILL.md
 - **Overview:** Why these patterns exist
-- **Core Contract:** Exact script argument order and Makefile syntax
+- **R Scripts and Makefile Conventions:** Exact script argument order and Makefile syntax
 - **File Organization:** Directory structure, naming conventions
 - **Make Pattern Rules:** Pattern rules (%), special targets, advanced examples
 - **Function Organization:** Pipeline scripts vs. function libraries vs. configuration
@@ -145,7 +145,7 @@ What do I need to do?
 
 If you're in a hurry, read these five sections:
 
-1. **SKILL.md: Core Contract** — How scripts and Make interact
+1. **SKILL.md: R Scripts and Makefile Conventions** — How scripts and Make interact
 2. **QUICK-REFERENCE.md: Script Argument Contract** — Copy the template
 3. **QUICK-REFERENCE.md: Makefile Template** — Copy the pattern
 4. **QUICK-REFERENCE.md: Example 3-Stage Pipeline** — See it working
