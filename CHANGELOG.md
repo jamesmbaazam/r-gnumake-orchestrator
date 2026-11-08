@@ -3,6 +3,11 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [1.0.3] - 2026-11-08
+
+### Changed
+- README: removed the "Three Core Rules", "Start Here", "When to Use" and "Quick Example" sections, and made "Resources to learn Make" a plain section instead of a collapsible one.
+
 ## [1.0.2] - 2026-11-08
 
 ### Added
