@@ -432,5 +432,5 @@ output/processed_input1.rds: data/raw_input1_v2.csv R/process.R R/shared_inputs.
 
 ---
 
-**Version:** 1.0.0  
-**Last updated:** 2 November 2026
+**Version:** 1.0.1  
+**Last updated:** 8 November 2026

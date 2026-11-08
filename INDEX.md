@@ -190,7 +190,7 @@ quarto render paper/paper.qmd
 
 ---
 
-**Skill version:** 1.0.0  
+**Skill version:** 1.0.1  
 **Generic patterns extracted from:** Research project implementations  
-**Last updated:** 2 November 2026  
+**Last updated:** 8 November 2026  
 **Status:** Ready for use

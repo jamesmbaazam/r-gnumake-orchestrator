@@ -50,6 +50,16 @@ Data analysis pipelines involve many interdependent stages (prepare → fit → 
 
 **This skill uses GNU Make** because it's lightweight, preinstalled on most systems, and forces clean separation between orchestration and analysis logic.
 
+<details>
+<summary><strong>Resources to learn Make</strong></summary>
+
+- [GNU Make manual](https://www.gnu.org/software/make/manual/make.html): the complete official reference.
+- [Ode to GNU Make](https://www.evan-soil.io/blog/ode-to-gnu-make/): a short, enthusiastic case for using Make.
+- [Reproducibility with Make](https://book.the-turing-way.org/reproducible-research/make/): the chapter in The Turing Way.
+- [minimal make](https://kbroman.org/minimal_make/): Karl Broman's quick tutorial for getting started.
+
+</details>
+
 ## Three Core Rules
 
 1. **Files are targets:** Every .csv, .rds, .png is a Make target; only rebuild when inputs change
@@ -103,13 +113,13 @@ make output/results.csv  # Only rebuilds if inputs changed
 
 If you find it useful, you are welcome to cite it, though you don't have to. GitHub's "Cite this repository" button (from [`CITATION.cff`](CITATION.cff)) gives APA and BibTeX.
 
-> Azam J. r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make (v1.0.0) [software]. 2026. https://github.com/jamesmbaazam/r-gnumake-orchestrator
+> Azam J. r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make (v1.0.1) [software]. 2026. https://github.com/jamesmbaazam/r-gnumake-orchestrator
 
 ```bibtex
 @software{azam_r_gnumake_orchestrator_2026,
   author  = {Azam, James},
   title   = {r-gnumake-orchestrator: a Claude Code skill for orchestrating R analysis pipelines with GNU Make},
-  version = {1.0.0},
+  version = {1.0.1},
   year    = {2026},
   url     = {https://github.com/jamesmbaazam/r-gnumake-orchestrator},
   license = {MIT}
@@ -119,5 +129,5 @@ If you find it useful, you are welcome to cite it, though you don't have to. Git
 ---
 
 **License:** MIT  
-**Version:** 1.0.0  
+**Version:** 1.0.1  
 See SKILL.md for complete documentation.
