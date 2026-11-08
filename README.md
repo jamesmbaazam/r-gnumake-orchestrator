@@ -63,7 +63,7 @@ Data analysis pipelines involve many interdependent stages (prepare → fit → 
 - **Makefile pattern:** each output file is a Make target, so only the stages whose inputs changed are rerun.
 - **Shared configuration:** one file holds the values several scripts need, such as the seed or country.
 - **File organisation and pattern rules:** how to lay out a project and write reusable Make rules.
-- **Common patterns:** batch processing, generating all combinations of inputs, multi-output rules and aggregating results.
+- **Common patterns:** batch processing, generating all combinations of inputs, one output per script and aggregating results.
 
 **Writing the R code**
 
