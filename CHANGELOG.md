@@ -12,6 +12,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - `QUICK-REFERENCE.md` and `INDEX.md`. `SKILL.md` and `README.md` are now the only guides.
 
 ### Changed
+- Convention is now one script, one output: the Pipeline Scripts example writes only `model.rds` and the metadata moves to its own `summarise_training.R` script. The multi-output Make rules are replaced by a "One Output per Script" pattern, and the checklist asks for exactly one output file.
 - Renamed the "Core Contract" section in `SKILL.md` to "R Scripts and Makefile Conventions".
 - Renamed "R Script Interface" to "R Script Pattern".
 - The Pipeline Scripts example now uses the same `.args` pattern as the R Script Pattern section.

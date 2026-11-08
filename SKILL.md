@@ -20,7 +20,7 @@ A guide to orchestrating analysis pipelines in R using GNU Make with file-target
 ## Overview
 
 This skill captures generic patterns for reproducible data analysis:
-- **Scripts as pure functions:** Accept arguments, read inputs, write outputs, exit
+- **Scripts as pure functions:** Accept arguments, read inputs, write one output, exit
 - **Makefiles with file targets:** Only rebuild when dependencies change
 - **Shared configuration:** One source of truth across all scripts
 - **Tidyverse ecosystem:** Consistent, modern R packages
@@ -156,38 +156,29 @@ output/processed_file1.rds: input/file1_v2.csv R/process.R R/shared_inputs.R | o
 	Rscript $^ $@
 ```
 
-**Advanced: multi-output rules**
-
-If a single script produces multiple outputs, list them both as targets. Make treats both as up-to-date after one execution.
-
-```makefile
-output/model.rds output/metadata.json: R/fit.R data/train.rds R/shared_inputs.R | output
-	Rscript $^ output/model.rds output/metadata.json
-```
+**One output per rule:** every script writes exactly one file, so every rule has exactly one target. If a stage needs two files, write two scripts and two rules (see "One Output per Script" under Common Patterns).
 
 ## Function Organization
 
 ### Pipeline Scripts
 
-One job per script. Each stage reads what the previous stage wrote.
+One job per script, and one output per script. Each stage reads what the previous stage wrote.
 
 ```r
 # R/fit_model.R
 # Purpose: Fit a model to prepared data
 # Inputs: data/prepared.rds, R/shared_inputs.R
-# Outputs: output/model.rds, output/model_meta.csv
+# Output: output/model.rds
 
 .args <- if (interactive()) c(
   "data/prepared.rds",
   "R/shared_inputs.R",
-  "output/model.rds",
-  "output/model_meta.csv"
+  "output/model.rds"
 ) else commandArgs(trailingOnly = TRUE)
 
 data_file <- .args[1]
 helper <- .args[2]
 model_file <- .args[3]
-meta_file <- .args[4]
 
 source(helper)
 
@@ -195,11 +186,34 @@ data <- read_rds(data_file)
 model <- fit_model(data, seed = SEED)
 
 write_rds(model, model_file)
+```
+
+Anything else derived from the same inputs, such as a summary of the training data, gets its own script and its own output:
+
+```r
+# R/summarise_training.R
+# Purpose: Summarise the data used to fit the model
+# Inputs: data/prepared.rds, R/shared_inputs.R
+# Output: output/model_meta.csv
+
+.args <- if (interactive()) c(
+  "data/prepared.rds",
+  "R/shared_inputs.R",
+  "output/model_meta.csv"
+) else commandArgs(trailingOnly = TRUE)
+
+data_file <- .args[1]
+helper <- .args[2]
+meta_file <- .args[3]
+
+source(helper)
+
+data <- read_rds(data_file)
+
 write_csv(
   tibble(
     n_training = nrow(data),
-    n_features = ncol(data) - 1,
-    model_type = "random_forest"
+    n_features = ncol(data) - 1
   ),
   meta_file
 )
@@ -499,7 +513,7 @@ When writing a new pipeline stage:
 - [ ] Script accepts arguments in order: inputs → helper → output
 - [ ] Script includes `.args` defaults for interactive testing
 - [ ] Script sources `R/shared_inputs.R` (never defines study-wide values)
-- [ ] Script reads all inputs, computes, writes all outputs
+- [ ] Script reads its inputs, computes, and writes exactly one output file
 - [ ] No `print()`, `message()`, or `cat()` (use `cli_abort()`, `cli_warn()` for errors only)
 - [ ] All results written to committed CSV/RDS/PNG files
 - [ ] Dependencies listed correctly in Makefile (in order)
@@ -539,13 +553,19 @@ output/%.rds: data/prepared.rds R/fit.R R/shared_inputs.R | output
 	Rscript $^ $@
 ```
 
-### Multi-Output Rules
+### One Output per Script
+
+When two files come from the same inputs, use two scripts and two rules. Each rule keeps the standard `Rscript $^ $@` form, and Make can run them in parallel.
 
 ```makefile
-# One script produces multiple outputs
-output/model.rds output/importance.csv: data/train.rds R/fit.R R/shared_inputs.R | output
-	Rscript $< R/shared_inputs.R output/model.rds output/importance.csv
+output/model.rds: data/prepared.rds R/fit_model.R R/shared_inputs.R | output
+	Rscript $^ $@
+
+output/model_meta.csv: data/prepared.rds R/summarise_training.R R/shared_inputs.R | output
+	Rscript $^ $@
 ```
+
+Avoid multi-target rules such as `a.rds b.csv: ...`. Plain Make treats each target as built separately, so the script can run twice under `make -j`, and `$@` only holds one of the two paths.
 
 ### Aggregating Results
 
