@@ -1,6 +1,6 @@
 {
   "name": "r-gnumake-orchestrator",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "title": "R + GNU Make Orchestrator",
   "description": "Generic patterns for orchestrating reproducible analysis pipelines in R using GNU Make with file-target workflows and commandArgs-based script interfaces.",
   "keywords": [

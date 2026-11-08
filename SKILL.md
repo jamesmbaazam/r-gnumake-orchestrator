@@ -763,6 +763,6 @@ fit_tree <- function(data, outcome_col, min_year, max_year) {
 
 ---
 
-**Skill version:** 1.0.3  
+**Skill version:** 1.0.4  
 **Generic patterns extracted from:** Research project reference implementations  
 **Last updated:** 8 November 2026
