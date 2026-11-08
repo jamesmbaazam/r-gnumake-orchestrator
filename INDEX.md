@@ -19,9 +19,8 @@ keywords:
 
 | File | Size | Purpose |
 |------|------|---------|
-| **SKILL.md** | ~8 KB | Complete reference: contract, patterns, examples, checklist, commons |
-| **README.md** | ~7 KB | Overview, key concepts, when to use, how to use |
-| **QUICK-REFERENCE.md** | ~9 KB | Copy-paste templates, commands, testing workflow, examples |
+| **SKILL.md** | — | Complete reference: conventions, patterns, examples, checklist |
+| **README.md** | — | Overview, installation, what the skill covers, learning resources |
 | **INDEX.md** | This file | Navigation guide |
 | **manifest.json** | — | Skill metadata |
 
@@ -29,49 +28,48 @@ keywords:
 
 ### "I'm just starting with this skill"
 1. Read **README.md** (5 min) for overview and key concepts
-2. Then **QUICK-REFERENCE.md: File Organization** to see the directory layout
-3. Look at **QUICK-REFERENCE.md: Example 3-Stage Pipeline** to see real code
+2. Then **SKILL.md: File Organization** to see the directory layout
+3. Look at **SKILL.md: Example: Simple 3-Stage Pipeline** to see real code
 
 ### "I need to write a new pipeline script"
-1. **QUICK-REFERENCE.md: Script Argument Contract** (copy the template)
+1. **SKILL.md: R Script Pattern** (copy the template)
 2. Fill in your logic
 3. Test interactively: `Rscript R/myscript.R`
-4. Check **QUICK-REFERENCE.md: Testing a New Script** for next steps
+4. Check **SKILL.md: Validation Workflow** for next steps
 5. Verify against **SKILL.md: Checklist for New Scripts**
 
 ### "I need to add a Make rule"
-1. **QUICK-REFERENCE.md: Makefile Template** (copy the pattern)
+1. **SKILL.md: Makefile Pattern** (copy the pattern)
 2. Adapt for your targets
 3. Test with `make --dry-run`
 4. If complex, read **SKILL.md: Make Pattern Rules** for advanced patterns
 
 ### "I need to debug why Make isn't rebuilding"
-1. **QUICK-REFERENCE.md: Common Commands** (force rebuild, dry-run)
-2. **SKILL.md: Validation Workflow** (systematic testing)
+1. **SKILL.md: Validation Workflow** (systematic testing, dry-run)
+2. Force a rebuild with `make <target> --always-make`
 3. Check: prerequisites listed in correct order? Dependencies spelled correctly?
 
 ### "I need to structure a reusable function"
 1. **SKILL.md: Function Organization** (where it goes, naming)
-2. **QUICK-REFERENCE.md: Roxygen2 Function Template** (documentation structure)
+2. **SKILL.md: Function Files** (roxygen2 documentation structure)
 3. After editing, run `make docs` to regenerate `man/` and `NAMESPACE`
 
 ### "I'm refactoring an existing pipeline"
 1. **SKILL.md: Project Structure** (see the layout)
 2. **SKILL.md: Shared Configuration** (extract `R/shared_inputs.R`)
-3. Add argument handling to scripts using **QUICK-REFERENCE.md: Script Argument Contract**
+3. Add argument handling to scripts using **SKILL.md: R Script Pattern**
 4. Replace phony Make targets with file targets using **SKILL.md: Makefile Pattern**
 5. Verify with **SKILL.md: Checklist for New Scripts**
 
 ### "I'm teaching this to someone"
 1. Give them **README.md** for overview
-2. Walk through **QUICK-REFERENCE.md: Example 3-Stage Pipeline** with real code
-3. Explain **QUICK-REFERENCE.md: Script Argument Contract**
+2. Walk through **SKILL.md: Example: Simple 3-Stage Pipeline** with real code
+3. Explain **SKILL.md: R Script Pattern**
 4. Show them testing workflow: interactive → arguments → Make
 
 ### "I need style guidance"
 - **SKILL.md: Style Guidelines** for Tidyverse packages, formatting, comments, error handling
-- **QUICK-REFERENCE.md: Tidyverse Style Checklist** for verification
-- **QUICK-REFERENCE.md: Humanizer Checklist** for writing quality
+- **SKILL.md: Tidyverse Style & Design Principles** for naming, function design and package choices
 
 ## Key Concepts by Section
 
@@ -87,58 +85,34 @@ keywords:
 - **Checklist:** Verification before committing
 - **Common Patterns:** Batch processing, multi-output rules, aggregation
 
-### README.md
-- **When to Use:** Projects where this pattern fits
-- **Three Core Rules:** Files, arguments, shared config
-- **Key Concepts:** Shared configuration, pure functions, results in files
-- **Pattern Rules:** Make % syntax
-- **How to Use:** For new projects, refactoring, teaching
-- **File Guide:** Which file to read for what
-- **Common Tasks:** Quick routing to relevant sections
-- **Validation Checklist:** Before committing
-
-### QUICK-REFERENCE.md
-- **Script Template:** Copy-paste argument handling
-- **Makefile Template:** Copy-paste file target rules
-- **File Organization:** Directory tree with annotations
-- **Testing Workflow:** 4-step testing from interactive to Make
-- **Common Commands:** Quarto, Make, debugging, cleanup
-- **Shared Configuration:** How to structure study-wide settings
-- **No Print Output:** Bad vs. good examples
-- **Roxygen2 Template:** Function documentation structure
-- **Tidyverse Checklist:** Package and syntax verification
-- **Full Example:** 3-stage pipeline (Makefile + 3 R scripts)
-- **Error Signalling:** cli_abort() and cli_warn() usage
-- **Pattern Rules:** Advanced Make with %
-
 ## Decision Tree
 
 ```
 What do I need to do?
 │
 ├─ Start a new project
-│  └─ README.md → QUICK-REFERENCE.md (File Org + Example)
+│  └─ README.md → SKILL.md (File Organization + Example)
 │
 ├─ Write a new script
-│  └─ QUICK-REFERENCE.md (Script Template) + SKILL.md (Checklist)
+│  └─ SKILL.md (R Script Pattern + Checklist)
 │
 ├─ Add a Make rule
-│  └─ QUICK-REFERENCE.md (Makefile Template) + SKILL.md (Pattern Rules)
+│  └─ SKILL.md (Makefile Pattern + Make Pattern Rules)
 │
 ├─ Debug a build issue
-│  └─ QUICK-REFERENCE.md (Common Commands) + SKILL.md (Validation)
+│  └─ SKILL.md (Validation Workflow)
 │
 ├─ Structure a function
-│  └─ SKILL.md (Function Organization) + QUICK-REFERENCE.md (Roxygen Template)
+│  └─ SKILL.md (Function Organization)
 │
 ├─ Refactor code
-│  └─ SKILL.md (Project Structure + Shared Config) + QUICK-REFERENCE.md (Script Template)
+│  └─ SKILL.md (File Organization + Shared Configuration + R Script Pattern)
 │
-├─ Improve writing quality
-│  └─ QUICK-REFERENCE.md (Humanizer Checklist) + SKILL.md (Style Guidelines)
+├─ Improve code style
+│  └─ SKILL.md (Style Guidelines + Tidyverse Style & Design Principles)
 │
 └─ Teach someone
-   └─ README.md (overview) + QUICK-REFERENCE.md (Example Pipeline)
+   └─ README.md (overview) + SKILL.md (Example)
 ```
 
 ## The Five Critical Sections
@@ -146,10 +120,10 @@ What do I need to do?
 If you're in a hurry, read these five sections:
 
 1. **SKILL.md: R Scripts and Makefile Conventions** — How scripts and Make interact
-2. **QUICK-REFERENCE.md: Script Argument Contract** — Copy the template
-3. **QUICK-REFERENCE.md: Makefile Template** — Copy the pattern
-4. **QUICK-REFERENCE.md: Example 3-Stage Pipeline** — See it working
-5. **SKILL.md: Checklist** — Verify your work
+2. **SKILL.md: R Script Pattern** — Copy the template
+3. **SKILL.md: Makefile Pattern** — Copy the pattern
+4. **SKILL.md: Example: Simple 3-Stage Pipeline** — See it working
+5. **SKILL.md: Checklist for New Scripts** — Verify your work
 
 These five sections contain everything needed to start a project. Everything else is reference material.
 
