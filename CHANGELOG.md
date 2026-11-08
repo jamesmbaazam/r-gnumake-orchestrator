@@ -13,6 +13,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Renamed "R Script Interface" to "R Script Pattern".
 - The Pipeline Scripts example now uses the same `.args` pattern as the R Script Pattern section.
 - README: the "Alternatives to GNU Make" table is now collapsible.
+- README title is now "R and GNU Make Orchestrator" instead of the repository name.
 
 ## [1.0.3] - 2026-11-08
 

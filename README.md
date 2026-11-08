@@ -1,4 +1,4 @@
-# r-gnumake-orchestrator
+# R and GNU Make Orchestrator
 
 **A Claude skill** for generic patterns to orchestrate R analysis pipelines using GNU Make 3.81. Suitable for data science, ML, forecasting, and research workflows.
 
