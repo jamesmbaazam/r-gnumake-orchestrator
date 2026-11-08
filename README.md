@@ -50,65 +50,13 @@ Data analysis pipelines involve many interdependent stages (prepare → fit → 
 
 **This skill uses GNU Make** because it's lightweight, preinstalled on most systems, and forces clean separation between orchestration and analysis logic.
 
-<details>
-<summary><strong>Resources to learn Make</strong></summary>
+## Resources to learn Make
 
 - [GNU Make manual](https://www.gnu.org/software/make/manual/make.html): the complete official reference.
 - [Ode to GNU Make](https://www.evan-soil.io/blog/ode-to-gnu-make/): a short, enthusiastic case for using Make.
 - [Reproducibility with Make](https://book.the-turing-way.org/reproducible-research/make/): the chapter in The Turing Way.
 - [minimal make](https://kbroman.org/minimal_make/): Karl Broman's quick tutorial for getting started.
 - [Using GNU Make to manage the workflow of data analysis projects](https://www.jstatsoft.org/article/view/v094c01): a Journal of Statistical Software article.
-
-</details>
-
-## Three Core Rules
-
-1. **Files are targets:** Every .csv, .rds, .png is a Make target; only rebuild when inputs change
-2. **Scripts accept arguments:** Order: input files → helper script → output file
-3. **One source of truth:** `R/shared_inputs.R` holds all study-wide values
-
-## Start Here
-
-- **New to this?** → Read SKILL.md (complete reference)
-- **Need a template?** → QUICK-REFERENCE.md (copy-paste examples)
-- **Looking for something?** → INDEX.md (navigation guide)
-
-## When to Use
-
-✓ Data analysis pipelines with 5+ stages  
-✓ Projects needing reproducibility  
-✓ Multi-person teams  
-✓ Large datasets  
-
-✗ Throwaway scripts  
-✗ Single-file analyses  
-✗ Software packages  
-
-## Quick Example
-
-**Makefile:**
-```makefile
-output/results.csv: data/raw.rds R/process.R R/shared_inputs.R | output
-	Rscript $^ $@
-```
-
-**R/process.R:**
-```r
-args <- commandArgs(trailingOnly = TRUE)
-input <- if (length(args) >= 1) args[1] else "data/raw.rds"
-helper <- if (length(args) >= 2) args[2] else "R/shared_inputs.R"
-output <- if (length(args) >= 3) args[3] else "output/results.csv"
-
-source(helper)
-data <- read_rds(input)
-results <- analyze(data)
-write_csv(results, output)
-```
-
-**Run:**
-```bash
-make output/results.csv  # Only rebuilds if inputs changed
-```
 
 ## Citing this skill
 
