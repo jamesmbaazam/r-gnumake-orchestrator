@@ -31,7 +31,7 @@ These patterns scale from small exploratory analyses to large research compendiu
 
 ## R Scripts and Makefile Conventions
 
-### R Script Interface
+### R Script Pattern
 
 Every pipeline script defines `.args` conditionally: interactive defaults if running in the console, `commandArgs()` if called from Make.
 
@@ -177,11 +177,17 @@ One job per script. Each stage reads what the previous stage wrote.
 # Inputs: data/prepared.rds, R/shared_inputs.R
 # Outputs: output/model.rds, output/model_meta.csv
 
-args <- commandArgs(trailingOnly = TRUE)
-data_file <- if (length(args) >= 1) args[1] else "data/prepared.rds"
-helper <- if (length(args) >= 2) args[2] else "R/shared_inputs.R"
-model_file <- if (length(args) >= 3) args[3] else "output/model.rds"
-meta_file <- if (length(args) >= 4) args[4] else "output/model_meta.csv"
+.args <- if (interactive()) c(
+  "data/prepared.rds",
+  "R/shared_inputs.R",
+  "output/model.rds",
+  "output/model_meta.csv"
+) else commandArgs(trailingOnly = TRUE)
+
+data_file <- .args[1]
+helper <- .args[2]
+model_file <- .args[3]
+meta_file <- .args[4]
 
 source(helper)
 
