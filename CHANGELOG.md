@@ -3,6 +3,17 @@
 All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- README section "What the skill covers", summarising the pipeline patterns and the tidyverse style and design guidance, with data.table reserved for intensive data manipulation.
+
+### Changed
+- Renamed the "Core Contract" section in `SKILL.md` to "R Scripts and Makefile Conventions" (and updated `INDEX.md` references).
+- Renamed "R Script Interface" to "R Script Pattern".
+- The Pipeline Scripts example now uses the same `.args` pattern as the R Script Pattern section.
+- README: the "Alternatives to GNU Make" table is now collapsible.
+
 ## [1.0.3] - 2026-11-08
 
 ### Changed
